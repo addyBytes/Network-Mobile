@@ -17,9 +17,9 @@ export default function TextInputField({
 }: Props) {
   return (
     <View className="mb-4">
-      <Text className="text-xs text-gray-700 mb-1">{label}</Text>
+      <Text className=" font-bold text-xs text-gray-700 mb-1">{label}</Text>
       <TextInput
-        className="w-full bg-white border border-gray-200 rounded-lg px-4 py-3 text-sm"
+        className="h-12 shadow-sm border-grey-300 w-full bg-white border border-gray-200 rounded-lg px-4 py-3 text-sm"
         placeholder={placeholder}
         placeholderTextColor="#9CA3AF"
         value={value}

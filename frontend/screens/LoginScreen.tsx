@@ -15,7 +15,7 @@ export default function LoginScreen() {
         Login to see what is out there waiting for you on the network and help you.
       </Text>
 
-      <TextInputField label="Email" placeholder="Placeholder text..." />
+      <TextInputField ClassName="font-bold" label="Email" placeholder="Placeholder text..." />
       <PasswordInput label="Password" placeholder="••••••••" />
 
       <PrimaryButton title="Next" onPress={() => router.push("/register")} />

@@ -6,9 +6,14 @@ export default function PrimaryButton({ title, disabled, onPress }: any) {
       activeOpacity={0.8}
       onPress={onPress}
       disabled={disabled}
-      className={`w-full rounded-2xl py-5 mt-4 ${disabled ? "bg-[#CBD5E1]" : "bg-[#111827]"}`}
+      className={`w-full h-12 rounded-lg mt-4 px-4 
+        flex-row items-center 
+        ${disabled ? "bg-[#CBD5E1]" : "bg-[#111827]"}`}
     >
-      <Text className={`text-center text-lg font-medium ${disabled ? "text-[#64748B]" : "text-white"}`}>
+      <Text
+        className={`text-sm font-medium 
+        ${disabled ? "text-[#64748B]" : "text-white"}`}
+      >
         {title}
       </Text>
     </TouchableOpacity>

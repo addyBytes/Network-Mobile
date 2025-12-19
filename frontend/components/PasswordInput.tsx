@@ -6,9 +6,9 @@ export default function PasswordInput({ label, placeholder }: any) {
   const [secure, setSecure] = useState(true);
 
   return (
-    <View className="mb-5">
-      <Text className="text-[14px] font-bold text-[#0F172A] mb-2">{label}</Text>
-      <View className="flex-row items-center bg-white border border-[#E2E8F0] rounded-2xl px-5 h-16">
+    <View className="mb-5 ">
+      <Text className="text-sm font-bold text-[#0F172A] mb-2">{label}</Text>
+      <View className="shadow-sm border-grey-300 flex-row items-center bg-white border border-[#E2E8F0] rounded-lg px-5 h-12">
         <TextInput
           className="flex-1 text-lg text-[#0F172A]"
           placeholder={placeholder}
