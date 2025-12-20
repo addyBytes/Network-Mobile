@@ -49,38 +49,14 @@ export default function LoginScreen() {
             Login to see what is out there waiting for you on the network and help you.
           </Text>
 
-          {/* Email */}
-          <View className=" ">
-            <TextInputField
-              label="Email"
-              placeholder="Enter Your email"
-            />
-          </View>
+      <TextInputField ClassName="font-bold" label="Email" placeholder="Placeholder text..." />
+      <PasswordInput label="Password" placeholder="••••••••" />
 
-          {/* Password */}
-          <View className="">
-            <PasswordInput
-              label="Password"
-              placeholder="••••••••"
-            />
-          </View>
+      <PrimaryButton title="Next" onPress={() => router.push("/register")} />
 
-          {/* Button */}
-          <View className="mb-3">
-            <PrimaryButton
-              title="Next"
-              onPress={() => router.push("/register")}
-            />
-          </View>
-
-          {/* Forgot password */}
-          <TouchableOpacity>
-            <Text className="text-sm text-gray-600">
-              Forgot Password?
-            </Text>
-          </TouchableOpacity>
-        </AuthLayout>
-      </KeyboardAwareScrollView>
-    </SafeAreaView>
+      <TouchableOpacity className="mt-6">
+        <Text className="text-sm text-gray-600">Forgot Password?</Text>
+      </TouchableOpacity>
+    </AuthLayout>
   );
-}
+}   
