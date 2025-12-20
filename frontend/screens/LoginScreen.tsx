@@ -18,7 +18,7 @@ import PrimaryButton from "../components/PrimaryButton";
 export default function LoginScreen() {
   const router = useRouter();
 
-  // ✅ Android navigation bar styling (icons visible)
+  // Android navigation bar styling
   useEffect(() => {
     if (Platform.OS === "android") {
       NavigationBar.setBackgroundColorAsync("#FBF7ED");
@@ -35,7 +35,7 @@ export default function LoginScreen() {
         contentContainerStyle={{
           flexGrow: 1,
           justifyContent: "flex-end",
-          paddingBottom: 20, // aligns exactly above nav bar
+          paddingBottom: 20,
         }}
       >
         <AuthLayout>
@@ -49,14 +49,35 @@ export default function LoginScreen() {
             Login to see what is out there waiting for you on the network and help you.
           </Text>
 
-      <TextInputField ClassName="font-bold" label="Email" placeholder="Placeholder text..." />
-      <PasswordInput label="Password" placeholder="••••••••" />
+          {/* Email */}
+          <TextInputField
+            label="Email"
+            placeholder="Enter your email"
+          />
 
-      <PrimaryButton title="Next" onPress={() => router.push("/register")} />
+          {/* Password */}
+          <PasswordInput
+            label="Password"
+            placeholder="••••••••"
+          />
 
-      <TouchableOpacity className="mt-6">
-        <Text className="text-sm text-gray-600">Forgot Password?</Text>
-      </TouchableOpacity>
-    </AuthLayout>
+          {/* Login Button */}
+          <PrimaryButton
+            title="Next"
+            onPress={() => router.push("/register")}
+          />
+
+          {/* Forgot Password */}
+          <TouchableOpacity
+            className="mt-6"
+            onPress={() => router.push("/forgot-password")}
+          >
+            <Text className="text-sm text-gray-600">
+              Forgot Password?
+            </Text>
+          </TouchableOpacity>
+        </AuthLayout>
+      </KeyboardAwareScrollView>
+    </SafeAreaView>
   );
-}   
+}
