@@ -1,36 +1,33 @@
-import React from 'react';
-import { ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import React from "react";
+import { ScrollView, View, useWindowDimensions } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-import BottomText from '@/components/BottomText';
-import GmailButton from '@/components/GmailButton';
-import Signup from '@/components/Signup';
-import Textbox from '@/components/Textbox';
+import BottomText from "@/components/BottomText";
+import GmailButton from "@/components/GmailButton";
+import Signup from "@/components/Signup";
+import Textbox from "@/components/Textbox";
 
 export default function HomeScreen() {
   const { width } = useWindowDimensions();
   const isTablet = width >= 600;
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <ScrollView 
-        contentContainerStyle={[
-          styles.scrollContent,
-          { 
-            // iPad: center | Mobile: bottom
-            justifyContent: isTablet ? 'center' : 'flex-end', 
-            // iPad: center | Mobile: left
-            alignItems: isTablet ? 'center' : 'flex-start' 
-          }
-        ]}
+    <SafeAreaView className="flex-1 bg-[#F9F8F0]">
+      <ScrollView
+        contentContainerClassName={`
+          flex-grow
+          px-6
+          pb-10
+          ${isTablet ? "items-center justify-center" : "items-start justify-end"}
+        `}
       >
-        <View style={[
-          styles.responsiveWrapper,
-          { 
-            width: isTablet ? 450 : '100%',
-            alignItems: isTablet ? 'center' : 'flex-start' 
-          }
-        ]}>
+        <View
+          className={`
+            w-full
+            ${isTablet ? "items-center" : "items-start"}
+          `}
+          style={isTablet ? { width: 400 } : undefined}
+        >
           <Textbox />
           <Signup />
           <GmailButton />
@@ -40,18 +37,3 @@ export default function HomeScreen() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: '#F9F8F0', 
-  },
-  scrollContent: {
-    flexGrow: 1,
-    paddingHorizontal: 24,
-    paddingBottom: 40,
-  },
-  responsiveWrapper: {
-    width: '100%',
-  },
-});
