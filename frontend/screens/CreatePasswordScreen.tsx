@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Platform,
+  useWindowDimensions,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -16,8 +17,9 @@ import PrimaryButton from "../components/PrimaryButton";
 
 export default function CreatePasswordScreen() {
   const router = useRouter();
+  const { width } = useWindowDimensions();
+  const isTablet = width >= 768; // Standard breakpoint for iPad
 
-  // Android navigation bar styling
   useEffect(() => {
     if (Platform.OS === "android") {
       NavigationBar.setBackgroundColorAsync("#FBF7ED");
@@ -30,56 +32,71 @@ export default function CreatePasswordScreen() {
       <KeyboardAwareScrollView
         enableOnAndroid
         keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{
-          flexGrow: 1,
-          justifyContent: "flex-end",
-          paddingBottom: 20,
-        }}
+        contentContainerStyle={{ flexGrow: 1 }}
       >
-        <AuthLayout>
-          {/* Header */}
-          <View className="mb-8">
-            <Text className="text-6xl font-serif text-[#1F2937] mb-2">
-              Create New Password
-            </Text>
-            <Text className="text-lg text-gray-500 leading-6">
-              Your new password must be different from previously used passwords
-            </Text>
-          </View>
-
-          {/* Inputs */}
-          <PasswordInput
-            label="New Password"
-            placeholder="Enter new password"
-          />
-
-          <PasswordInput
-            label="Confirm Password"
-            placeholder="Confirm new password"
-          />
-
-          {/* Button */}
-          <PrimaryButton
-            title="Reset Password"
-            onPress={() => {
-              console.log("Password Reset Successful");
-              router.push("/");
-            }}
-          />
-
-          {/* Footer */}
-          <View className="flex-row items-center justify-center mt-6">
-            <Text className="text-gray-500 text-sm">
-              Back to{" "}
-            </Text>
-            <TouchableOpacity onPress={() => router.push("/")}>
-              <Text className="text-[#111827] font-bold text-sm">
-                Login →
+        <View 
+          className={`flex-1 p-8 ${
+            isTablet 
+              ? "justify-center items-center" 
+              : "justify-end items-start"
+          }`}
+        >
+          {/* Constrain width on Tablet to match your iPad reference */}
+          <View style={{ width: '100%', maxWidth: isTablet ? 400 : '100%' }}>
+            
+            {/* Header: Left-aligned on mobile, Center-aligned on iPad */}
+            <View className={`mb-10 ${isTablet ? "items-center" : "items-start"}`}>
+              <Text 
+                className="text-5xl font-serif text-[#1F2937] mb-2"
+                style={{ textAlign: isTablet ? 'center' : 'left' }}
+              >
+                Create Password
               </Text>
-            </TouchableOpacity>
+              <Text 
+                className="text-lg text-gray-500 leading-6 mb-[-2]"
+                style={{ textAlign: isTablet ? 'center' : 'left' }}
+              >
+                Your new password must be different from previously used passwords.
+              </Text>
+            </View>
+
+            {/* Inputs */}
+            <View className="w-full">
+              <PasswordInput
+                label="New Password"
+                placeholder="Enter new password"
+              />
+              <View className="h-4 mb-[-8]" /> 
+              <PasswordInput
+                label="Confirm Password"
+                placeholder="Confirm new password"
+              />
+            </View>
+
+            {/* Button */}
+            <View className="mt-2">
+              <PrimaryButton
+                title="Reset Password"
+                onPress={() => router.push("/")}
+              />
+            </View>
+
+            {/* Footer: Bottom-left on mobile, Centered on iPad */}
+            <View 
+              className={`flex-row mt-8 ${
+                isTablet ? "justify-center" : "justify-start"
+              }`}
+            >
+              <Text className="text-gray-400 text-sm mb-5">Back to </Text>
+              <TouchableOpacity onPress={() => router.push("/")}>
+                <Text className="text-[#111827] font-bold text-sm">
+                  Login →
+                </Text>
+              </TouchableOpacity>
+            </View>
+            
           </View>
-        </AuthLayout>
+        </View>
       </KeyboardAwareScrollView>
     </SafeAreaView>
   );
