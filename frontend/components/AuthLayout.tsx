@@ -8,7 +8,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         contentContainerStyle={{ flexGrow: 1, justifyContent: 'flex-end' }}
         showsVerticalScrollIndicator={false}
       >
-        <View className="px-8 pb-12 pt-20">
+        <View className="px-8 pb-12 pt-20 w-full">
           {children}
         </View>
       </ScrollView>

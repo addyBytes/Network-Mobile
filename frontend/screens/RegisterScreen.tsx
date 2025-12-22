@@ -7,11 +7,10 @@ import {
   useWindowDimensions,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import * as NavigationBar from "expo-navigation-bar";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-import AuthLayout from "../components/AuthLayout";
 import TextInputField from "../components/TextInputField";
 import PasswordInput from "../components/PasswordInput";
 import PrimaryButton from "../components/PrimaryButton";
@@ -20,6 +19,15 @@ export default function RegisterScreen() {
   const router = useRouter();
   const { width } = useWindowDimensions();
   const isTablet = width >= 600;
+
+  const [email, setEmail] = useState("");
+  const [mobile, setMobile] = useState("");
+  const [password, setPassword] = useState("");
+
+  const isEnabled =
+    email.trim() !== "" &&
+    mobile.trim() !== "" &&
+    password.trim() !== "";
 
   useEffect(() => {
     if (Platform.OS === "android") {
@@ -34,69 +42,90 @@ export default function RegisterScreen() {
         enableOnAndroid
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
-        contentContainerClassName={`
-          flex-grow
-          px-6
-          pb-8
-          ${isTablet ? "items-center justify-center" : "justify-end"}
-        `}
+        extraScrollHeight={120}
+        contentContainerStyle={{
+          flexGrow: 1,
+          paddingHorizontal: 24,
+        }}
       >
-        {/* Width wrapper */}
+        {/* MAIN WRAPPER */}
         <View
-          className="w-full items-center"
-          style={isTablet ? { width: 400 } : undefined}
+          className={`flex-1 ${
+            isTablet ? "items-center justify-center" : "justify-end"
+          }`}
         >
-          <View className="w-full">
-            <AuthLayout>
-              {/* CENTERED HEADER */}
-              <View className="items-center mb-6">
-                <Text className="text-5xl font-serif text-[#1F2937] mb-3 text-center">
-                  Register
-                </Text>
+          {/* CONTENT */}
+          <View
+            className="w-full"
+            style={isTablet ? { width: 400 } : undefined}
+          >
+            {/* TITLE */}
+            <Text
+              className={`text-5xl font-serif text-[#1F2937] mb-3 ${
+                isTablet ? "text-center" : "text-left"
+              }`}
+            >
+              Register
+            </Text>
 
-                <Text className="text-base text-gray-500 leading-6 text-center">
-                  We have sent a 4 digit code in your email, enter it to verify your email
-                </Text>
-              </View>
+            {/* SUBTITLE */}
+            <Text
+              className={`text-base text-gray-500 mb-6 leading-6 ${
+                isTablet ? "text-center" : "text-left"
+              }`}
+            >
+              We have sent a 4 digit code in your email, enter it to verify your email
+            </Text>
 
-              {/* Email */}
-              <TextInputField
-                label="Email"
-                placeholder="Enter your email"
-                keyboardType="email-address"
-              />
+            {/* EMAIL */}
+            <TextInputField
+              label="Email"
+              placeholder="Enter your email"
+              keyboardType="email-address"
+              value={email}
+              onChangeText={setEmail}
+            />
 
-              {/* Mobile number */}
-              <TextInputField
-                label="Mobile No"
-                placeholder="9876543210"
-                keyboardType="number-pad"
-              />
+            {/* MOBILE */}
+            <TextInputField
+              label="Mobile No"
+              placeholder="9876543210"
+              keyboardType="number-pad"
+              value={mobile}
+              onChangeText={setMobile}
+            />
 
-              {/* Password */}
-              <PasswordInput
-                label="Password"
-                placeholder="••••••••"
-              />
+            {/* PASSWORD */}
+            <PasswordInput
+              label="Password"
+              placeholder="••••••••"
+              value={password}
+              onChangeText={setPassword}
+            />
 
-              {/* Continue Button */}
-              <View className="mb-4">
-                <PrimaryButton
-                  title="Continue"
-                  onPress={() => router.push("/enter-code")}
-                />
-              </View>
+            {/* CONTINUE BUTTON */}
+            <PrimaryButton
+              title="Continue"
+              disabled={!isEnabled}
+              onPress={() => router.push("/enter-code")}
+              className={isEnabled ? "bg-[#0D0F18]" : "bg-[#CBD5E1]"}
+              textClassName={isEnabled ? "text-white" : "text-[#64748B]"}
+            />
 
-              {/* Forgot Password – CENTERED */}
-              <TouchableOpacity
-                className="items-center"
-                onPress={() => router.back()}
-              >
-                <Text className="text-sm text-gray-600">
-                  Forgot Password?
-                </Text>
-              </TouchableOpacity>
-            </AuthLayout>
+            {/* BACK / FORGOT */}
+            <TouchableOpacity
+              className={`mt-4 ${
+                isTablet ? "items-center" : "items-start"
+              }`}
+              onPress={() => router.back()}
+            >
+              <Text className="text-sm text-gray-600">
+                Forgot Password?
+              </Text>
+            </TouchableOpacity>
+
+            {/* PHONE SAFE GAP */}
+            {!isTablet && <View className="h-6" />}
           </View>
         </View>
       </KeyboardAwareScrollView>

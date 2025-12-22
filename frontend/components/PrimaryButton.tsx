@@ -1,37 +1,38 @@
-import { TouchableOpacity, Text } from "react-native";
+import { Text, TouchableOpacity } from "react-native";
 
-type Props = {
+interface Props {
   title: string;
+  onPress: () => void;
   disabled?: boolean;
-  onPress?: () => void;
-};
+  className?: string;
+  textClassName?: string;
+}
 
 export default function PrimaryButton({
   title,
-  disabled = false,
   onPress,
+  disabled = false,
+  className = "",
+  textClassName = "",
 }: Props) {
   return (
     <TouchableOpacity
       activeOpacity={0.85}
-      onPress={onPress}
       disabled={disabled}
+      onPress={onPress}
       className={`
         w-full
-        h-14
+        py-4
         rounded-xl
-        flex-row
         items-center
-        ${disabled ? "bg-[#CBD5E1]" : "bg-[#111827]"}
+        ${className}
       `}
     >
-      {/* Left aligned text */}
       <Text
         className={`
-          ml-5
           text-base
-          font-medium
-          ${disabled ? "text-[#64748B]" : "text-white"}
+          font-semibold
+          ${textClassName}
         `}
       >
         {title}

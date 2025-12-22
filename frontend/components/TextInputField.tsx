@@ -1,12 +1,12 @@
 import { View, Text, TextInput } from "react-native";
 
-type Props = {
+interface Props {
   label: string;
   placeholder?: string;
   value?: string;
   onChangeText?: (text: string) => void;
-  keyboardType?: "default" | "email-address" | "number-pad";
-};
+  keyboardType?: any;
+}
 
 export default function TextInputField({
   label,
@@ -16,18 +16,18 @@ export default function TextInputField({
   keyboardType = "default",
 }: Props) {
   return (
-    <View className="mb-4">
-      <Text className="text-sm font-bold text-gray-700 mb-1">
+    <View className="mb-4 w-full">
+      <Text className="mb-2 text-sm font-medium text-[#1F2937]">
         {label}
       </Text>
 
       <TextInput
-        className="w-full bg-white border border-gray-200 rounded-xl px-4 h-14 text-base text-[#0F172A]"
-        placeholder={placeholder}
-        placeholderTextColor="#9CA3AF"
         value={value}
         onChangeText={onChangeText}
+        placeholder={placeholder}
         keyboardType={keyboardType}
+        className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-base"
+        placeholderTextColor="#9CA3AF"
       />
     </View>
   );

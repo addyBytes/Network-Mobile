@@ -1,22 +1,44 @@
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { useState } from "react";
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
 
-export default function PasswordInput({ label, placeholder }: any) {
+interface Props {
+  label: string;
+  placeholder?: string;
+  value?: string;
+  onChangeText?: (text: string) => void;
+}
+
+export default function PasswordInput({
+  label,
+  placeholder,
+  value,
+  onChangeText,
+}: Props) {
   const [secure, setSecure] = useState(true);
 
   return (
-    <View className="mb-5 ">
-      <Text className="text-sm font-bold text-[#0F172A] mb-2">{label}</Text>
-      <View className="shadow-sm border-grey-300 flex-row items-center bg-white border border-[#E2E8F0] rounded-xl px-5 h-17">
+    <View className="mb-4 w-full">
+      <Text className="mb-2 text-sm font-medium text-[#1F2937]">
+        {label}
+      </Text>
+
+      <View className="flex-row items-center rounded-xl border border-gray-200 bg-white px-4">
         <TextInput
-          className="flex-1 text-lg text-[#0F172A]"
+          value={value}
+          onChangeText={onChangeText}
           placeholder={placeholder}
-          placeholderTextColor="#9CA3AF"
           secureTextEntry={secure}
+          className="flex-1 py-3 text-base"
+          placeholderTextColor="#9CA3AF"
         />
+
         <TouchableOpacity onPress={() => setSecure(!secure)}>
-          <Ionicons name="eye-outline" size={22} color="#9CA3AF" />
+          <Ionicons
+            name={secure ? "eye-outline" : "eye-off-outline"}
+            size={20}
+            color="#9CA3AF"
+          />
         </TouchableOpacity>
       </View>
     </View>
