@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Platform,
+  useWindowDimensions,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -17,8 +18,9 @@ import PrimaryButton from "../components/PrimaryButton";
 
 export default function LoginScreen() {
   const router = useRouter();
+  const { width } = useWindowDimensions();
+  const isTablet = width >= 600;
 
-  // Android navigation bar styling
   useEffect(() => {
     if (Platform.OS === "android") {
       NavigationBar.setBackgroundColorAsync("#FBF7ED");
@@ -27,56 +29,66 @@ export default function LoginScreen() {
   }, []);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#FBF7ED" }}>
+    <SafeAreaView className="flex-1 bg-[#FBF7ED]">
       <KeyboardAwareScrollView
         enableOnAndroid
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{
-          flexGrow: 1,
-          justifyContent: "flex-end",
-          paddingBottom: 20,
-        }}
+        contentContainerClassName={`
+          flex-grow
+          px-6
+          pb-8
+          ${isTablet ? "items-center justify-center" : "justify-end"}
+        `}
       >
-        <AuthLayout>
-          {/* Title */}
-          <Text className="text-6xl font-serif text-[#1F2937] mb-3">
-            Login
-          </Text>
+        {/* Width wrapper only (NO background) */}
+        <View
+          className="w-full items-center"
+          style={isTablet ? { width: 400 } : undefined}
+        >
+          {/* Transparent container */}
+          <View className="w-full">
+            <AuthLayout>
+              {/* Title */}
+              <Text className="text-5xl font-serif text-[#1F2937] mb-3">
+                Login
+              </Text>
 
-          {/* Subtitle */}
-          <Text className="text-lg text-gray-500 mb-2 leading-6">
-            Login to see what is out there waiting for you on the network and help you.
-          </Text>
+              {/* Subtitle */}
+              <Text className="text-base text-gray-500 mb-6 leading-6">
+                Login to see what is out there waiting for you on the network and help you.
+              </Text>
 
-          {/* Email */}
-          <TextInputField
-            label="Email"
-            placeholder="Enter your email"
-          />
+              {/* Email */}
+              <TextInputField
+                label="Email"
+                placeholder="Enter your email"
+              />
 
-          {/* Password */}
-          <PasswordInput
-            label="Password"
-            placeholder="••••••••"
-          />
+              {/* Password */}
+              <PasswordInput
+                label="Password"
+                placeholder="••••••••"
+              />
 
-          {/* Login Button */}
-          <PrimaryButton
-            title="Next"
-            onPress={() => router.push("/register")}
-          />
+              {/* Login Button */}
+              <PrimaryButton
+                title="Next"
+                onPress={() => router.push("/register")}
+              />
 
-          {/* Forgot Password */}
-          <TouchableOpacity
-            className="mt-6"
-            onPress={() => router.push("/forgot-password")}
-          >
-            <Text className="text-sm text-gray-600">
-              Forgot Password?
-            </Text>
-          </TouchableOpacity>
-        </AuthLayout>
+              {/* Forgot Password – CENTERED */}
+              <TouchableOpacity
+                className="mt-6 items-center"
+                onPress={() => router.push("/forgot-password")}
+              >
+                <Text className="text-sm text-gray-600">
+                  Forgot Password?
+                </Text>
+              </TouchableOpacity>
+            </AuthLayout>
+          </View>
+        </View>
       </KeyboardAwareScrollView>
     </SafeAreaView>
   );
